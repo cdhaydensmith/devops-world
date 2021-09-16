@@ -261,3 +261,39 @@ anchore:
   dockerfile: ""
 
 ```
+## Verify Syft Installation
+Let's verify we have syft up and running by running the following command below: 
+
+`syft version`
+
+## The Simple Stuff pt. 1
+Let's just perform an analysis on an image and see what happens!
+
+```
+syft <image>
+```
+
+Interesting this gives us an output that is a list of packages found in this specific image. However, sometimes you may not have an image available, you may just want to point it at a directory. Let's do that now
+
+```
+syft dir:/devops-world/sample-apps
+```
+
+Or, maybe you have an image saved or a tarball you would want to scan. Lets build an image from the dockerfile in this repo
+
+```
+docker build -t devops-world .
+docker save -o devops-world.tar
+syft docker-archive:devops-world.tar
+```
+These are all very generic, lets take it a bit deeper.
+
+## From Good to Great
+
+Let's go ahead and instead of looking at images "squashed" lets analyze all layers of an image.
+
+` syft packages <your_image> -s all-layers -o spdx-json `
+
+A couple important things to note 1) instead of getting a simple list of pkgs returned we have a lot more here. Lets talk about it 2) why spdx again? Let's discuss this too! 3) SBOM's are great data points. Let's use this data in a bit of a different way.
+
+` syft packages <your_image> -s all-layers -o spdx-json > sample-app-sbom.json `
