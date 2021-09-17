@@ -297,3 +297,5 @@ Let's go ahead and instead of looking at images "squashed" lets analyze all laye
 A couple important things to note 1) instead of getting a simple list of pkgs returned we have a lot more here. Lets talk about it 2) why spdx again? Let's discuss this too! 3) SBOM's are great data points. Let's use this data in a bit of a different way.
 
 ` syft packages <your_image> -s all-layers -o spdx-json > sample-app-sbom.json `
+
+
