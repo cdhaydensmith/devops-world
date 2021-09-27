@@ -264,54 +264,63 @@ anchore:
   dockerfile: ""
 
 ```
+
 ## Verify Syft Installation
 Let's verify we have syft up and running by running the following command below: 
 
 `syft version`
 
-## The Simple Stuff pt. 1
+## The Simple Stuff
 Let's just perform an analysis on an image and see what happens!
 
 ```
 syft <image>
 ```
 
-Interesting this gives us an output that is a list of packages found in this specific image. However, sometimes you may not have an image available, you may just want to point it at a directory. Let's do that now
+Take a few minutes and play around by using syft to analyze a few images.
+
+` syft alpine:latest `
+` syft ubuntu:20.04 `
+` syft debian:stable-slim `
+` syft your_favorite:image ` 
+
+Now, let's extract a little bit more information from these images by looking at the output.
+
+` syft ubuntu:20.04 -o json `
+` syft ubutnu: 20.04 -o spdx `
+` syft ubuntu:20.04 -o cyclonedx `
+` syft ubuntu:20.04 - o spdx-json `
+
+Interesting this gives us an output that is a list of packages found in this specific image yet in totally different formats.
+
+
+
+You can also scan tarballs. Let's build this image from the sample Dockerfile in this repo and save the trball you would want to scan. Follow these steps:
 
 ```
-syft dir:/devops-world/sample-apps
-```
-
-Or, maybe you have an image saved or a tarball you would want to scan. Lets build an image from the dockerfile in this repo
-
-```
-docker build -t devops-world .
-docker save -o devops-world.tar
+docker build -t ghcr.io/cdhaydensmith/devops-world:hooray .
+docker save ghcr.io/cdhaydensmith/devops-world:hooray > devops-world.tar
 syft docker-archive:devops-world.tar
+
 ```
-These are all very generic, lets take it a bit deeper.
 
-## From Good to Great
+and now that we built the image in this repo, lets analyze it!
 
-Let's go ahead and instead of looking at images "squashed" lets analyze all layers of an image.
+` syft image ghcr.io/cdhaydensmith/devops-world:hooray -o json `
+` syft image ghcr.io/cdhaydensmith/devops-world:hooray -o spdx-json `
 
-` syft packages <your_image> -s all-layers -o spdx-json `
 
-A couple important things to note 1) instead of getting a simple list of pkgs returned we have a lot more here. Lets talk about it 2) why spdx again? Let's discuss this too! 3) SBOM's are great data points. Let's use this data in a bit of a different way.
+## Inspect your SBOM for Vulnerabilities and Generate a Vulnerability Report
+
+Let's generate a fresh sbom and save it as an artifact to be reused.
 
 ` syft packages <your_image> -s all-layers -o spdx-json > sample-app-sbom.json `
 
 From here we can take the sbom and analyze it specifically for applicable vulnerabilities/CVE...using Grype! Let's Download Grype!
 
-### Grype's Database
 
-Grype pulls a database of vulnerabilities derived from the publicly available [Anchore Feed Service](https://ancho.re/v1/service/feeds). This database is updated at the beginning of each scan, but an update can also be triggered manually.
 
-```
-grype db update
-```
-
-## Installation
+## Installation for Grype
 
 **Recommended (macOS and Linux)**
 
@@ -344,13 +353,10 @@ This will output a shell script to STDOUT, which can then be used as a completio
 
 Take the output from the sbom generation step. Quick reminder on how to do that below:
 
-` syft packages <your_image> -s all-layers -o spdx-json > sample-app-sbom.json `
+` syft packages <your_image> -s all-layers -o json > sample-app-sbom.json `
 
 There is our lovely SBOM! Now we can take that output and use grype to analyze that sbom for vulnerabilities
 
 ` grype sbom:sample-app-sbom.json `
 
 Voila! You can now see vulnerabilities within that sbom!
-
-
-
