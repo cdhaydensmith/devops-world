@@ -298,4 +298,43 @@ A couple important things to note 1) instead of getting a simple list of pkgs re
 
 ` syft packages <your_image> -s all-layers -o spdx-json > sample-app-sbom.json `
 
+From here we can take the sbom and analyze it specifically for applicable vulnerabilities/CVE...using Grype! Let's Download Grype!
+
+### Grype's Database
+
+Grype pulls a database of vulnerabilities derived from the publicly available [Anchore Feed Service](https://ancho.re/v1/service/feeds). This database is updated at the beginning of each scan, but an update can also be triggered manually.
+
+```
+grype db update
+```
+
+## Installation
+
+**Recommended (macOS and Linux)**
+
+```bash
+# install the latest version to /usr/local/bin
+curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+
+# install a specific version into a specific dir
+curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b <SOME_BIN_PATH> <RELEASE_VERSION>
+```
+
+**Homebrew (macOS)**
+
+```bash
+brew tap anchore/grype
+brew install grype
+```
+
+## Shell Completion
+
+Grype supplies shell completion through its CLI implementation ([cobra](https://github.com/spf13/cobra/blob/master/shell_completions.md)). Generate the completion code for your shell by running one of the following commands:
+
+* `grype completion <bash|zsh|fish>`
+* `go run main.go completion <bash|zsh|fish>`
+
+This will output a shell script to STDOUT, which can then be used as a completion script for Grype. Running one of the above commands with the
+`-h` or `--help` flags will provide instructions on how to do that for your chosen shell.
+
 
