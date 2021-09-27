@@ -337,4 +337,17 @@ Grype supplies shell completion through its CLI implementation ([cobra](https://
 This will output a shell script to STDOUT, which can then be used as a completion script for Grype. Running one of the above commands with the
 `-h` or `--help` flags will provide instructions on how to do that for your chosen shell.
 
+## Let's Party with Grype + Syft 
+
+Take the output from the sbom generation step. Quick reminder on how to do that below:
+
+` syft packages <your_image> -s all-layers -o spdx-json > sample-app-sbom.json `
+
+There is our lovely SBOM! Now we can take that output and use grype to analyze that sbom for vulnerabilities
+
+` grype sbom:sample-app-sbom.json `
+
+Voila! You can now see vulnerabilities within that sbom!
+
+
 
