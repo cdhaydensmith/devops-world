@@ -1,5 +1,5 @@
-# devops-world
-Let's Party with Syft!!
+# devops-world: Let's Party with Syft!!
+
 
  syft
 
@@ -22,6 +22,25 @@ A CLI tool and go library for generating a Software Bill of Materials (SBOM) fro
 
 
 If you encounter an issue, please [let us know using the issue tracker](https://github.com/anchore/syft/issues).
+
+
+
+## Installation
+
+**Recommended (macOS and Linux)**
+```bash
+# install the latest version to /usr/local/bin
+curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+
+# install a specific version into a specific dir
+curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b <SOME_BIN_PATH> <RELEASE_VERSION>
+```
+
+**Homebrew (macOS)**
+```bash
+brew tap anchore/syft
+brew install syft
+```
 
 ## Getting started
 
@@ -74,22 +93,6 @@ Where the `format`s available are:
 - `spdx-json`: A JSON report conforming to the [SPDX 2.2 JSON Schema](https://github.com/spdx/spdx-spec/blob/v2.2/schemas/spdx-schema.json).
 - `table`: A columnar summary (default).
 
-## Installation
-
-**Recommended (macOS and Linux)**
-```bash
-# install the latest version to /usr/local/bin
-curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
-
-# install a specific version into a specific dir
-curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b <SOME_BIN_PATH> <RELEASE_VERSION>
-```
-
-**Homebrew (macOS)**
-```bash
-brew tap anchore/syft
-brew install syft
-```
 
 ## Configuration
 
