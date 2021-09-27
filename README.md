@@ -1,4 +1,4 @@
-# devops-world: Let's Party with Syft!!
+# DevOps-World: Let's Party with Syft!!
 
 
  syft
