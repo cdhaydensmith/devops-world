@@ -286,13 +286,16 @@ Take a few minutes and play around by using syft to analyze a few images.
 
 Now, let's extract a little bit more information from these images by looking at the output.
 
-` syft ubuntu:20.04 -o json `
-` syft ubutnu: 20.04 -o spdx `
-` syft ubuntu:20.04 -o cyclonedx `
-` syft ubuntu:20.04 - o spdx-json `
+```
+
+ syft ubuntu:20.04 -o json
+ syft ubutnu: 20.04 -o spdx 
+ syft ubuntu:20.04 -o cyclonedx  
+ syft ubuntu:20.04 - o spdx-json 
+
+```
 
 Interesting this gives us an output that is a list of packages found in this specific image yet in totally different formats.
-
 
 
 You can also scan tarballs. Let's build this image from the sample Dockerfile in this repo and save the trball you would want to scan. Follow these steps:
@@ -306,8 +309,11 @@ syft docker-archive:devops-world.tar
 
 and now that we built the image in this repo, lets analyze it!
 
-` syft image ghcr.io/cdhaydensmith/devops-world:hooray -o json `
-` syft image ghcr.io/cdhaydensmith/devops-world:hooray -o spdx-json `
+```
+syft image ghcr.io/cdhaydensmith/devops-world:hooray -o json 
+syft image ghcr.io/cdhaydensmith/devops-world:hooray -o spdx-json 
+
+```
 
 
 ## Inspect your SBOM for Vulnerabilities and Generate a Vulnerability Report
